@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?><testsuite errors="0" failures="1" name="pytest" skips="1" tests="4" time="0.069"><testcase classname="tests.test_api" file="tests/test_api.py" line="4" name="test_one" time="0.0007510185241699219"></testcase><testcase classname="tests.test_api" file="tests/test_api.py" line="8" name="test_two" time="0.0005767345428466797"></testcase><testcase classname="tests.test_api" file="tests/test_api.py" line="12" name="test_failure" time="0.0028841495513916016"><failure message="assert 1 == 2
+ +  where 1 = &lt;function one at 0x10df32ae8&gt;()
+ +    where &lt;function one at 0x10df32ae8&gt; = api.one
+ +  and   2 = &lt;function two at 0x10df32bf8&gt;()
+ +    where &lt;function two at 0x10df32bf8&gt; = api.two">def test_failure():
+        &quot;&quot;&quot;a failing test!&quot;&quot;&quot;
+&gt;       assert api.one() == api.two()
+E       assert 1 == 2
+E        +  where 1 = &lt;function one at 0x10df32ae8&gt;()
+E        +    where &lt;function one at 0x10df32ae8&gt; = api.one
+E        +  and   2 = &lt;function two at 0x10df32bf8&gt;()
+E        +    where &lt;function two at 0x10df32bf8&gt; = api.two
+
+tests/test_api.py:15: AssertionError</failure></testcase><testcase classname="tests.test_api" file="tests/test_api.py" line="17" name="test_skip" time="0.0004851818084716797"><skipped message="unconditional skip" type="pytest.skip">tests/test_api.py:17: &lt;py._xmlgen.raw object at 0x10ded76a0&gt;</skipped></testcase></testsuite>

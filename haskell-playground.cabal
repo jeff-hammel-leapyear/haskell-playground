@@ -1,0 +1,103 @@
+-- This file has been generated from package.yaml by hpack version 0.20.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 1237c7153e32d35f9ac89d2fa6350b32cc2df4dcd7b2e58aec51537c0091dce5
+
+name:           haskell-playground
+version:        0.1.0.0
+description:    experiments while learning that awesome language Haskell
+homepage:       https://github.com/jeff-hammel-leapyear/haskell-playground#readme
+bug-reports:    https://github.com/jeff-hammel-leapyear/haskell-playground/issues
+author:         Jeff Hammel
+maintainer:     Jeff Hammel
+copyright:      2018 Jeff Hammel
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+cabal-version:  >= 1.10
+
+extra-source-files:
+    README.md
+
+source-repository head
+  type: git
+  location: https://github.com/jeff-hammel-leapyear/haskell-playground
+
+library
+  hs-source-dirs:
+      src
+  build-depends: base
+    , Cabal
+    , hxt
+    , optparse-applicative
+    , containers
+  exposed-modules:
+      Playground.Envreport
+      Playground.Fibonacci
+      Playground.Primes
+      Playground.Reverse
+      Playground.Smooth
+      Playground.Words
+  default-language: Haskell2010
+
+executable smooths
+  main-is: Smooth.hs
+  hs-source-dirs:
+      exe
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , haskell-playground
+  default-language: Haskell2010
+
+executable junit-parser
+  main-is: Junitparser.hs
+  hs-source-dirs:
+      exe
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , haskell-playground
+    , hxt
+    , hxt-curl
+    , optparse-applicative
+  default-language: Haskell2010
+
+executable wordcount
+  main-is: Wordcount.hs
+  hs-source-dirs:
+      exe
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , haskell-playground
+    , containers
+  default-language: Haskell2010
+
+test-suite haskell-playground-spec
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Playground.SmoothSpec
+      Playground.SquarewaveSpec
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , haskell-playground
+    , hspec
+  default-language: Haskell2010
+
+test-suite tasty-playground
+  type: exitcode-stdio-1.0
+  main-is: TastyTests.hs
+  hs-source-dirs: test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , haskell-playground
+    , tasty
+    , tasty-hunit
+  default-language: Haskell2010
