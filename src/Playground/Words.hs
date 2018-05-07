@@ -5,6 +5,7 @@ module Playground.Words ( count
 import Data.List (sortBy)
 import Data.Map (Map(..), fromListWith, toList)
 
+
 count :: (Ord k, Num a) => [k] -> Map k a
 count items = fromListWith (+) counted
   where
@@ -13,5 +14,5 @@ count items = fromListWith (+) counted
 sortCount :: Ord a => [(String, a)] -> [(String, a)]
 sortCount = sortBy (flip compare')
   where
-    compare' a b | snd a == snd b = compare (fst a) (fst b)
+    compare' a b | snd a == snd b = compare (fst b) (fst a) -- keep alpha ascending
                  | otherwise = compare (snd a) (snd b)
