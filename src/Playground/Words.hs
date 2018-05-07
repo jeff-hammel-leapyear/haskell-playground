@@ -11,7 +11,7 @@ count items = fromListWith (+) counted
     counted = [ (k, 1) | k <- items ]
 
 sortCount :: Ord a => [(String, a)] -> [(String, a)]
-sortCount l = sortBy compare' l
+sortCount = sortBy compare'
   where
     compare' a b | snd a == snd b = compare (fst a) (fst b)
                  | otherwise = compare (snd a) (snd b)
