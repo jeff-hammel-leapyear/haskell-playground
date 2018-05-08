@@ -39,6 +39,7 @@ library
       Playground.Reverse
       Playground.Smooth
       Playground.Words
+      Playground.Xml
   default-language: Haskell2010
 
 executable smooths
@@ -62,6 +63,34 @@ executable junit-parser
     , hxt
     , hxt-curl
     , optparse-applicative
+  default-language: Haskell2010
+
+executable xml2txt
+  main-is: XmlToText.hs
+  hs-source-dirs:
+      exe
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , bytestring
+    , haskell-playground
+    , hxt
+    , optparse-applicative
+    , xeno
+  default-language: Haskell2010
+
+executable sax2txt
+  main-is: SaxToText.hs
+  hs-source-dirs:
+      exe
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , bytestring
+    , haskell-playground
+    , mtl
+    , optparse-applicative
+    , xeno
   default-language: Haskell2010
 
 executable wordcount
@@ -93,6 +122,18 @@ test-suite haskell-playground-spec
 test-suite tasty-playground
   type: exitcode-stdio-1.0
   main-is: TastyTests.hs
+  hs-source-dirs: test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , haskell-playground
+    , tasty
+    , tasty-hunit
+  default-language: Haskell2010
+
+test-suite test-maybe
+  type: exitcode-stdio-1.0
+  main-is: TestMaybe.hs
   hs-source-dirs: test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
