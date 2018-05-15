@@ -61,3 +61,13 @@ See also https://stackoverflow.com/questions/4619206/parse-xml-in-haskell
 and https://stackoverflow.com/questions/1361307/which-haskell-xml-library-to-use .
 
 Also to consider: http://hackage.haskell.org/package/sax
+
+
+## Persisting data
+
+The [persistent package](https://www.stackage.org/package/persistent)
+is highly recommended as a great example of what Haskell and functional
+programming can do. Having dealt with various SQls over the years,
+while ORMs can be convenient (misued they may also make life
+*extremely inconvenient*!), but OO does not seem a natural fit for
+relational database queries.  Functions do.
