@@ -38,9 +38,9 @@ process' n = case n of
   otherwise -> []
 
 parse' :: ByteString -> Node
-parse' str = node
-  where
-    Right node = parse str
+parse' str = case (parse str) of
+    Right node -> node
+    Left l -> error $ show l
 
 main :: IO ()
 main = do
