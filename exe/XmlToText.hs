@@ -18,6 +18,7 @@ import Options.Applicative ( (<**>)
                            , metavar
                            , progDesc
                            , strOption)
+import Playground.Xml (parse')
 import System.IO (readFile)
 import Xeno.DOM (Node(..), Content(..), contents, parse)
 
@@ -37,11 +38,6 @@ process' n = case n of
   Text t -> [unpack t]
   otherwise -> []
 
-parse' :: ByteString -> Node
-parse' str = case (parse str) of
-    Right node -> node
-    Left l -> error $ show l
-
 main :: IO ()
 main = do
   options <- execParser opts
@@ -52,4 +48,3 @@ main = do
       ( fullDesc
      <> progDesc "Convert XML to text via DOM"
      <> header "--HELP!" )
-
