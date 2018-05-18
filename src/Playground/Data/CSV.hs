@@ -1,6 +1,8 @@
 -- | CSV related functionality
 
-module Playground.Data.CSV (toCSV, toTable) where
+module Playground.Data.CSV ( pairToCSV
+                           , toCSV
+                           , toTable) where
 
 import Data.List (intercalate)
 import Data.String (String(..))
@@ -17,3 +19,6 @@ toCSV :: Show a => [[a]] -> String
 toCSV table = unlines $ map showRow table
   where
     showRow = (intercalate ",") . (map show)
+
+pairToCSV :: [(String, String)] -> String
+pairToCSV l = unlines [a ++ "," ++ b | (a,b) <- l]
