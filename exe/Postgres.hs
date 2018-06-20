@@ -19,6 +19,7 @@ import Data.Text.Encoding (encodeUtf8)
 import Database.Persist (Entity(..), Entity)
 import Database.Persist.Postgresql ( ConnectionString
                                    , printMigration
+                                   , runMigration
                                    , withPostgresqlPool)
 import Database.Persist.Sql (runSqlPersistMPool)
 import qualified Database.Persist.TH as PTH
@@ -59,15 +60,12 @@ parser = Options
           ( metavar "CONNSTRING"
          <> help "connection string for postgres database" )
 
---pack' :: Text -> ByteString
---pack' = encodeUtf8 . pack
-
 main :: IO ()
 main = do
   Options {..} <- execParser opts
   runStdoutLoggingT $ withPostgresqlPool (encodeUtf8 pgConnStr) 10 $ \pool ->
     liftIO $ flip runSqlPersistMPool pool $ do
-       printMigration migrateAll
+       runMigration migrateAll
   where
     opts = info ( parser <**> helper)
       ( fullDesc
