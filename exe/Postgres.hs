@@ -8,6 +8,7 @@
 {-# LANGUAGE RecordWildCards            #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE OverloadedStrings          #-}
+{-# LANGUAGE EmptyDataDecls #-}
 
 import Data.Semigroup ((<>))
 import Data.Text (Text)
