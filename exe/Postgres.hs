@@ -32,7 +32,6 @@ PTH.share [PTH.mkPersist PTH.sqlSettings, PTH.mkMigrate "migrateAll"] [PTH.persi
     email Text
     age Int
     occupation Text
-    UniqueEmail email
     deriving Show Read
 |]
 
