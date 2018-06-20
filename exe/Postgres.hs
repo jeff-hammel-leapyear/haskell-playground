@@ -18,8 +18,10 @@ import Data.Text (Text, pack)
 import Data.Text.Encoding (encodeUtf8)
 import Database.Persist (Entity(..), Entity)
 import Database.Persist.Postgresql ( ConnectionString
+                                   , parseMigration
                                    , printMigration
                                    , runMigration
+                                   , runMigrationUnsafe
                                    , withPostgresqlPool)
 import Database.Persist.Sql (runSqlPersistMPool)
 import qualified Database.Persist.TH as PTH
@@ -38,7 +40,6 @@ import Options.Applicative
 PTH.share [PTH.mkPersist PTH.sqlSettings, PTH.mkMigrate "migrateAll"] [PTH.persistLowerCase|
   User sql=users
     name Text
-    email Text
     age Int
     occupation Text
     deriving Show Read
@@ -65,7 +66,7 @@ main = do
   Options {..} <- execParser opts
   runStdoutLoggingT $ withPostgresqlPool (encodeUtf8 pgConnStr) 10 $ \pool ->
     liftIO $ flip runSqlPersistMPool pool $ do
-       runMigration migrateAll
+      runMigrationUnsafe migrateAll
   where
     opts = info ( parser <**> helper)
       ( fullDesc
