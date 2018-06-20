@@ -16,7 +16,7 @@ import Data.ByteString (ByteString)
 import Data.Semigroup ((<>))
 import Data.Text (Text, pack)
 import Data.Text.Encoding (encodeUtf8)
-import Database.Persist (Entity(..), Entity)
+import Database.Persist (Entity(..), Entity, insert)
 import Database.Persist.Postgresql ( ConnectionString
                                    , parseMigration
                                    , printMigration
@@ -67,6 +67,8 @@ main = do
   runStdoutLoggingT $ withPostgresqlPool (encodeUtf8 pgConnStr) 10 $ \pool ->
     liftIO $ flip runSqlPersistMPool pool $ do
       runMigrationUnsafe migrateAll
+      johnId <- insert $ User "John Doe" 1 "Software Developer"
+      liftIO $ print johnId
   where
     opts = info ( parser <**> helper)
       ( fullDesc
