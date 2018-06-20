@@ -10,10 +10,17 @@
 {-# LANGUAGE OverloadedStrings          #-}
 {-# LANGUAGE EmptyDataDecls #-}
 
+import Control.Monad.IO.Class (liftIO)
+import Control.Monad.Logger (runStdoutLoggingT)
+import Data.ByteString (ByteString)
 import Data.Semigroup ((<>))
-import Data.Text (Text)
+import Data.Text (Text, pack)
+import Data.Text.Encoding (encodeUtf8)
 import Database.Persist (Entity(..), Entity)
-import Database.Persist.Postgresql (ConnectionString)
+import Database.Persist.Postgresql ( ConnectionString
+                                   , printMigration
+                                   , withPostgresqlPool)
+import Database.Persist.Sql (runSqlPersistMPool)
 import qualified Database.Persist.TH as PTH
 import Options.Applicative
 
@@ -45,17 +52,22 @@ PTH.share [PTH.mkPersist PTH.sqlSettings, PTH.mkMigrate "migrateAll"] [PTH.persi
 --   }
 
 -- https://www.postgresql.org/docs/current/static/libpq-connect.html#LIBPQ-CONNSTRING
-newtype Options = Options { pgConnStr :: String }
+newtype Options = Options { pgConnStr :: Text }
 parser :: Parser Options
 parser = Options
       <$> argument str
           ( metavar "CONNSTRING"
          <> help "connection string for postgres database" )
 
+--pack' :: Text -> ByteString
+--pack' = encodeUtf8 . pack
+
 main :: IO ()
 main = do
   Options {..} <- execParser opts
-  putStrLn pgConnStr
+  runStdoutLoggingT $ withPostgresqlPool (encodeUtf8 pgConnStr) 10 $ \pool ->
+    liftIO $ flip runSqlPersistMPool pool $ do
+       printMigration migrateAll
   where
     opts = info ( parser <**> helper)
       ( fullDesc
