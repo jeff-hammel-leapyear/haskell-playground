@@ -14,13 +14,14 @@ import Data.Maybe (fromMaybe)
 import qualified Data.Map as Map
 import System.Directory ( canonicalizePath
                         , doesDirectoryExist
+                        , doesFileExist
                         , executable
                         , findExecutablesInDirectories
                         , getPermissions
                         , listDirectory )
 import System.IO (FilePath)
 import System.Environment (lookupEnv)
-import System.FilePath ((</>))
+import System.FilePath ((</>), takeFileName)
 
 pathToList :: String -> String -> IO [String]
 pathToList sep path = filterM doesDirectoryExist split
@@ -30,13 +31,19 @@ pathToList sep path = filterM doesDirectoryExist split
 pathToList' = pathToList ":"
 
 listDirectoryWith :: (FilePath -> IO Bool) -> FilePath -> IO [FilePath]
-listDirectoryWith check directory = listDirectory directory >>= filterM check
+listDirectoryWith check directory = do
+  contents <- listDirectory directory
+  paths <- filterM check [ directory </> f | f <- contents ]
+  return $ map takeFileName paths
 
 isExecutable :: FilePath -> IO Bool
 isExecutable = fmap executable . getPermissions
 
 listExecutables :: FilePath -> IO [FilePath]
-listExecutables = listDirectoryWith isExecutable
+listExecutables directory = do
+  contents <- listDirectoryWith doesFileExist directory
+  exes <- filterM isExecutable [ directory </> f | f <- contents ]
+  return $ map takeFileName exes
 
 listExecutableTuples :: FilePath -> IO [(FilePath, FilePath)]
 listExecutableTuples directory = do
