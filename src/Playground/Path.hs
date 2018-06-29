@@ -9,6 +9,7 @@ module Playground.Path ( executables
                        , pathToList') where
 
 import Control.Monad (filterM)
+import Data.List (sort)
 import Data.List.Split (splitOn)
 import Data.Maybe (fromMaybe)
 import qualified Data.Map as Map
@@ -43,7 +44,7 @@ listExecutables :: FilePath -> IO [FilePath]
 listExecutables directory = do
   contents <- listDirectoryWith doesFileExist directory
   exes <- filterM isExecutable [ directory </> f | f <- contents ]
-  return $ map takeFileName exes
+  return $ sort $ map takeFileName exes
 
 listExecutableTuples :: FilePath -> IO [(FilePath, FilePath)]
 listExecutableTuples directory = do
