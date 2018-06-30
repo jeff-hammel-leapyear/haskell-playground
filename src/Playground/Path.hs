@@ -1,6 +1,7 @@
 -- | Functionality for dealing with PATH and similar
 
-module Playground.Path ( executables
+module Playground.Path ( allExecutables
+                       , executables
                        , isExecutable
                        , listDirectoryWith
                        , listExecutableTuples
@@ -52,12 +53,14 @@ listExecutableTuples directory = do
   exe <- listExecutables abs
   return [(f, abs </> f) | f <- exe]
 
-executables :: String -> String -> IO (Map.Map FilePath FilePath)
-executables env sep = do
+allExecutables :: String -> String -> IO [(FilePath, FilePath)]
+allExecutables env sep = do
   path <- fromMaybe "" <$> lookupEnv env
   directories <- pathToList sep path
-  exe <- concat <$> mapM listExecutableTuples directories
-  return $ Map.fromList exe
+  concat <$> mapM listExecutableTuples directories
+
+executables :: String -> String -> IO (Map.Map FilePath FilePath)
+executables env sep = Map.fromList <$> allExecutables env sep
 
 -- whichAll :: String -> IO [String]
 
