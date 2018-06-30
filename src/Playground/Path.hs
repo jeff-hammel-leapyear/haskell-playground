@@ -1,13 +1,15 @@
 -- | Functionality for dealing with PATH and similar
 
 module Playground.Path ( allExecutables
-                       , executables
+                       , executableMap
                        , isExecutable
                        , listDirectoryWith
                        , listExecutableTuples
                        , listExecutables
                        , pathToList
-                       , pathToList') where
+                       , pathToList'
+                       , which
+                       , whichAll ) where
 
 import Control.Monad (filterM)
 import Data.List (sort)
@@ -59,9 +61,18 @@ allExecutables env sep = do
   directories <- pathToList sep path
   concat <$> mapM listExecutableTuples directories
 
-executables :: String -> String -> IO (Map.Map FilePath FilePath)
-executables env sep = Map.fromList <$> allExecutables env sep
+executableMap :: String -> String -> IO (Map.Map String [FilePath])
+executableMap env sep = fold <$> allExecutables env sep
+  where
+    fold = Map.fromListWith (flip (++)) . map (\(a, b) -> (a, [b]))
+--   fold = foldr (\(i, j) m -> Map.insert i (j:Map.findWithDefault [] i m) m) Map.empty
 
--- whichAll :: String -> IO [String]
+whichAll :: String -> IO [FilePath]
+whichAll prog = do
+  m <- executableMap "PATH" ":"
+  return $ Map.findWithDefault [] prog m
 
--- which :: String -> Maybe String
+which :: String -> IO (Maybe FilePath)
+which prog = do
+  m <- whichAll prog
+  return $ if null m then Nothing else Just (head m)
