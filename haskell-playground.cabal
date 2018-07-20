@@ -42,6 +42,7 @@ library
       Playground.Data.CSV
       Playground.Envreport
       Playground.Fibonacci
+      Playground.Maths
       Playground.Path
       Playground.Primes
       Playground.Reverse
@@ -160,6 +161,7 @@ executable postgresh
     , persistent-postgresql
     , persistent-template
     , text
+  default-language: Haskell2010
 
 executable backwords
   main-is: Backwords.hs
@@ -210,6 +212,7 @@ test-suite haskell-playground-spec
   main-is: Spec.hs
   other-modules:
       Playground.DataSpec
+      Playground.MathsSpec
       Playground.SmoothSpec
       Playground.SquarewaveSpec
       Playground.XmlSpec
