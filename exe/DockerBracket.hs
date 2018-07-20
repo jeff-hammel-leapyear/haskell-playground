@@ -28,20 +28,22 @@ import Docker.Client.Types (fromContainerID)
 
 -- https://github.com/denibertovic/docker-hs/blob/master/examples/Example.hs#L25
 runPostgresContainer :: IO ContainerID
-runPostgresContainer = runContainer "postgres:9.6"
+runPostgresContainer = runContainer "postgres:9.6" [(5432, 5432)]
 
-runContainer :: String -> IO ContainerID
-runContainer image = do
+runContainer :: String -> [(Integer, Integer)] -> IO ContainerID
+runContainer image portMapping = do
   h <- defaultHttpHandler
   runDockerT (defaultClientOpts, h) $
-    do let pb = PortBinding 5432 TCP [HostPort "0.0.0.0" 5432]
-       let myCreateOpts = addPortBinding pb $ defaultCreateOpts $ fromString image
+    do -- let pb = PortBinding 5432 TCP [HostPort "0.0.0.0" 5432]
+       -- https://hackage.haskell.org/package/docker-0.6.0.0/docs/Docker-Client-Types.html#t:CreateOpts
+       let myCreateOpts = foldl (\opts (host, guest) -> addPortBinding (PortBinding guest TCP [HostPort "0.0.0.0" host]) opts) (defaultCreateOpts $ fromString image) portMapping
        cid <- createContainer myCreateOpts Nothing
        case cid of
          Left err -> error $ show err
          Right i -> do
            _ <- startContainer defaultStartOpts i
            return i
+
 
 stopContainer' :: ContainerID -> IO ()
 stopContainer' cid = do
