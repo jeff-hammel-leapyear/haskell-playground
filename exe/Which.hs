@@ -43,5 +43,5 @@ main = do
     env = "PATH"
     opts = info (parser <**> helper)
       ( fullDesc
-     <> progDesc "find all words that are reverse from a dictionary"
+     <> progDesc "Haskell fancy which"
      <> header "You asked for --help" )
