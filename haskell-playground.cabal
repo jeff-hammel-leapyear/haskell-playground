@@ -36,6 +36,7 @@ library
     , hxt
     , network-uri
     , optparse-applicative
+    , process
     , split
     , xeno
   exposed-modules:
@@ -45,6 +46,7 @@ library
       Playground.Maths
       Playground.Path
       Playground.Primes
+      Playground.Process
       Playground.Reverse
       Playground.Smooth
       Playground.Words
