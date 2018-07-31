@@ -4,6 +4,9 @@
 -- - https://kseo.github.io/posts/2014-02-06-multi-line-strings-in-haskell.html
 
 {-# LANGUAGE QuasiQuotes #-}
+
+module TestQuasiQuotes where
+
 import Data.List (intercalate)
 import Text.RawString.QQ
 import Test.Tasty
@@ -22,11 +25,8 @@ multiexpected = intercalate "\n" ["the quick brown",
                                   "jumped over",
                                   "the lazy dog"]
 
-main :: IO ()
-main = defaultMain tests
-
-tests :: TestTree
-tests = testGroup "TastyTests" [unitTests]
+test_quasiquotes :: IO TestTree
+test_quasiquotes = pure $ testGroup "TastyTests" [unitTests]
 
 unitTests = testGroup "Quoting tests"
   [
