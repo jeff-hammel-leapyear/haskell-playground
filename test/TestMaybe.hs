@@ -8,8 +8,6 @@ import Data.Maybe (catMaybes)
 import Test.Tasty
 import Test.Tasty.HUnit
 
-main = defaultMain tests
-
 -- Let's say you have multiple types and you want to act on them differently
 
 data Foo = Bar Int | Fleem Float Int | Baz String
