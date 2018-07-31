@@ -1,4 +1,8 @@
+{-# LANGUAGE ScopedTypeVariables #-}
+
 -- | Test our understanding of Maybe patterns
+
+module TestMaybe where
 
 import Data.Maybe (catMaybes)
 import Test.Tasty
@@ -30,3 +34,7 @@ unitTests = testGroup "Unit tests"
     testCase "Test our getInts" $
       getInts testdata @?= [2,3,7]
   ]
+
+unit_testMaybe :: IO ()
+unit_testMaybe = getInts testdata @?= [2,3,7]
+
