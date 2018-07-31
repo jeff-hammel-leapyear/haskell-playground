@@ -228,6 +228,7 @@ test-suite haskell-playground-spec
   other-modules:
       Playground.DataSpec
       Playground.MathsSpec
+      Playground.ProcessSpec
       Playground.SmoothSpec
       Playground.SquarewaveSpec
       Playground.XmlSpec
@@ -279,3 +280,13 @@ test-suite test-quasi-quotes
     , tasty-hunit
     , raw-strings-qq
   default-language: Haskell2010
+
+test-suite tasty-discover
+  type: exitcode-stdio-1.0
+  main-is: Driver.hs
+  hs-source-dirs: test
+  build-depends:
+      base >=4.7 && <5
+    , haskell-playground
+    , tasty
+    , tasty-discover

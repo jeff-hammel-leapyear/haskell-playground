@@ -8,4 +8,4 @@ spec :: Spec
 spec = describe "process" $ do
   let command = "exit $(( RANDOM % 7 ))"
   it "should exit after several retries" $ do
-    1 `shoudlBe` 1
+    1 `shouldBe` 1
