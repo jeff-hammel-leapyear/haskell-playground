@@ -1,9 +1,9 @@
 -- data related tests
 
 {-# LANGUAGE QuasiQuotes #-}
-module Playground.DataSpec (spec) where
+module Playground.DataSpec (spec_tables) where
 
-import Test.Hspec
+import Test.Tasty.Hspec
 import Text.RawString.QQ
 
 import Playground.Data.CSV (toTable, toCSV)
@@ -30,8 +30,8 @@ peoplecsv = [r|"Papu","5","1.8"
 |]
 peoplefunctions = [name, show . age, show . height]
 
-spec :: Spec
-spec = describe "tables" $ do
+spec_tables :: Spec
+spec_tables = describe "tables" $ do
 
   it "makes a table" $ do
     toTable functions testdata `shouldBe` testresults

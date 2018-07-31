@@ -1,12 +1,12 @@
 {-# LANGUAGE QuasiQuotes #-}
 
-module Playground.XmlSpec (spec) where
+module Playground.XmlSpec (spec_xml) where
 
 import Control.Exception (throw)
 import Data.ByteString.Char8 (pack, unpack)
 import Data.Either (fromRight)
 import Playground.Xml (findElements)
-import Test.Hspec
+import Test.Tasty.Hspec
 import Text.RawString.QQ
 import qualified Data.Map as Map
 import qualified Xeno.SAX as SAX
@@ -42,8 +42,8 @@ updateFromAttrs person key value
   | otherwise = person  -- ignore other attributes
 
 
-spec :: Spec
-spec = describe "Parsing XML" $ do
+spec_xml :: Spec
+spec_xml = describe "Parsing XML" $ do
 
   it "should be able to steal attributes" $ do
     foldAttrs xml `shouldBe` [("nm", "Bob"),

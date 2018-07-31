@@ -1,11 +1,11 @@
-module Playground.SquarewaveSpec (spec) where
+module Playground.SquarewaveSpec (spec_squarewave) where
 
-import Test.Hspec
+import Test.Tasty.Hspec
 
 import Playground.Smooth (squareWave)
 
-spec :: Spec
-spec = describe "a square wave" $ do
+spec_squarewave :: Spec
+spec_squarewave = describe "a square wave" $ do
     it "is a wave" $ do
       (map s $ take 10 x) `shouldBe` (take 10 $ concat $ repeat [negate amplitude, amplitude])
       where

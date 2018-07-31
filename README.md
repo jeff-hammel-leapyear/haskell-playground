@@ -18,7 +18,8 @@ stack build --test
 ```
 
 At first I started using HSpec;
-now I'm moving everything to [tasty-discover](https://git.coop/lwm/tasty-discover/tree/master).
+now I moved everything to
+[tasty-discover](https://git.coop/lwm/tasty-discover/tree/master).
 Why?  Two reasons:
 
 1. I need to test in the IO monad
