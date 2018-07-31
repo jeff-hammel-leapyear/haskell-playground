@@ -11,9 +11,19 @@ stack install haskell-playground
 
 ## Testing
 
+In this directory:
+
 ```
-stack build haskell-playground:test:haskell-playground-spec
+stack build --test
 ```
+
+At first I started using HSpec;
+now I'm moving everything to [tasty-discover](https://git.coop/lwm/tasty-discover/tree/master).
+Why?  Two reasons:
+
+1. I need to test in the IO monad
+2. For parity with what everyone else is doing.
+
 
 ## Parsing XML
 
