@@ -247,5 +247,5 @@ test-suite tasty-discover
     , Playground.MathsSpec
     , Playground.SmoothSpec
     , Playground.SquarewaveSpec
+    , Playground.TestWhich
     , Playground.XmlSpec
-
