@@ -82,3 +82,20 @@ programming can do. Having dealt with various SQls over the years,
 while ORMs can be convenient (misued they may also make life
 *extremely inconvenient*!), but OO does not seem a natural fit for
 relational database queries.  Functions do.
+
+
+## Docker
+
+As a testing and automation engineer, I often desire to use docker
+for isolation and ease of cleanup.  Luckily,
+[Docker has an API](https://docs.docker.com/engine/api).
+Even more luckily,
+[Haskell has an API client](http://hackage.haskell.org/package/docker).
+
+Unluckily for Mac users, the docker API is not my default exposed:
+https://github.com/docker/for-mac/issues/770
+Luckily (sorta), you can get around this:
+
+```
+docker run -d -v /var/run/docker.sock:/var/run/docker.sock -p 127.0.0.1:2375:2375 bobrik/socat TCP-LISTEN:2375,fork UNIX-CONNECT:/var/run/docker.sock
+```
