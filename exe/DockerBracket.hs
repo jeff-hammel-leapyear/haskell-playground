@@ -34,8 +34,7 @@ runContainer :: String -> [(Integer, Integer)] -> IO ContainerID
 runContainer image portMapping = do
   h <- defaultHttpHandler
   runDockerT (defaultClientOpts, h) $
-    do -- let pb = PortBinding 5432 TCP [HostPort "0.0.0.0" 5432]
-       -- https://hackage.haskell.org/package/docker-0.6.0.0/docs/Docker-Client-Types.html#t:CreateOpts
+    do
        let myCreateOpts = foldl (\opts (host, guest) -> addPortBinding (PortBinding guest TCP [HostPort "0.0.0.0" host]) opts) (defaultCreateOpts $ fromString image) portMapping
        cid <- createContainer myCreateOpts Nothing
        case cid of
