@@ -99,3 +99,37 @@ Luckily (sorta), you can get around this:
 ```
 docker run -d -v /var/run/docker.sock:/var/run/docker.sock -p 127.0.0.1:2375:2375 bobrik/socat TCP-LISTEN:2375,fork UNIX-CONNECT:/var/run/docker.sock
 ```
+
+## The decorator pattern
+
+Let's say you have a function, `foo :: a -> b -> c -> d`.
+When you run this, say in the `IO` monad, you want to take
+how long this runs.
+
+How I would do this in python would be something like:
+```
+def foo(x, y): return x + y
+
+import functools
+curried = functools.partial(foo, 2, 2)
+
+import time
+def timer(name, function):
+    start = time.time()
+    retval = function()
+    duration = time.time() - start
+    print ("{},{}".format(name, duration))
+    return retval
+```
+
+In Haskell, one may get the current time like
+```
+⇒ round `fmap` getPOSIXTime
+1535734331
+⇒ :t round `fmap` getPOSIXTime
+round `fmap` getPOSIXTime :: Integral b => IO b
+```
+
+```
+:: Text -> IO a -> IO a
+```
