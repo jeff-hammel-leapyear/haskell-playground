@@ -169,4 +169,7 @@ data, we'll assume it is supplied.  For the above, in `python`
 
 Wat one do in Haskell?
 
+cassava seems to be the prefered way of parsing CSV in Haskell:
+http://hackage.haskell.org/package/cassava
+
 See also http://hackage.haskell.org/package/Frames
