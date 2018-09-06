@@ -100,7 +100,7 @@ Luckily (sorta), you can get around this:
 docker run -d -v /var/run/docker.sock:/var/run/docker.sock -p 127.0.0.1:2375:2375 bobrik/socat TCP-LISTEN:2375,fork UNIX-CONNECT:/var/run/docker.sock
 ```
 
-## The decorator pattern
+## Challenge: timer as a decorator pattern
 
 Let's say you have a function, `foo :: a -> b -> c -> d`.
 When you run this, say in the `IO` monad, you want to take
@@ -133,3 +133,40 @@ round `fmap` getPOSIXTime :: Integral b => IO b
 ```
 :: Text -> IO a -> IO a
 ```
+
+
+## Challenge:  CSV -> SQL
+
+Let's say you have a
+[CSV](https://en.wikipedia.org/wiki/Comma-separated_values) file.
+For instance:
+```
+time,name,duration,n
+1536259801.5649989,provision,308.3897850513458,4
+1536260110.546742,install,103.3924732208252,4
+1536260213.940296,distribute_data,437.2491891384125,4
+1536260653.190413,start_server,41.54069399833679,4
+```
+
+Now you want to insert this into a table in a (SQL) database
+(or create a table if it doesn't exist and then insert it).
+How do you do this?
+
+The first part you would want is the schema.  While
+one could (exercise left ot reader) infer this from the column
+type, since CSV doesn't have schema information stored with the
+data, we'll assume it is supplied.  For the above, in `python`
+`dict` form, one might express the schema as follows
+(we're not, for now, worrying about the underlying SQL types):
+```
+{
+  "time":     float,   # or datetime
+  "name":     str,
+  "duration": float,
+  "n":        int
+}
+```
+
+Wat one do in Haskell?
+
+See also http://hackage.haskell.org/package/Frames
