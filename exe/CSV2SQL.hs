@@ -1,8 +1,12 @@
+{-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RecordWildCards #-}
 
--- Conver CSV to SQL (an experiment!)
+-- Convert CSV to SQL (an experiment!)
+-- See https://github.com/haskell-hvr/cassava
 
+import qualified Data.ByteString.Lazy as BL
 import Data.Semigroup ((<>))
+import Dava.Csv
 import Playground.CSV (CSVType(..))
 import Options.Applicative ( Parser
                            , (<**>)
